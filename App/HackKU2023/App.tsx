@@ -1,16 +1,13 @@
 import * as React from 'react';
+import * as Firebase from './backend/Firebase';
 import { Text, View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
-import TavernPage from './components/TavernPage';
+import RootNavigation from './navigation/Index';
 
 export default class App extends React.Component {
-  state = {
-    page: 'login'
-  };
-  
   render() {
     return (
-      <TavernPage></TavernPage>
+      <RootNavigation />
     )
   };
 }
