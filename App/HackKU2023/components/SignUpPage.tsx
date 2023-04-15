@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input, Button } from 'react-native-elements';
 import { StackScreenProps } from '@react-navigation/stack';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, database } from '../backend/Firebase';
 import { ref, set } from "firebase/database";
+import { LinearGradient } from 'expo-linear-gradient'
+import { Button, TextInput } from 'react-native-paper';
 
 const windowDimensions = Dimensions.get('window');
 
@@ -43,46 +44,46 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Signup screen!</Text>
+      <LinearGradient
+            // Background Linear Gradient
+            colors={['#fff', '#CBC3E3', '#baa7da']}
+            start={[0.5, 0]}
+            end={[0.5, 1]}
+            style={styles.background}
+          />
 
       {!!value.error && <View style={styles.error}><Text>{value.error}</Text></View>}
 
       <View style={styles.controls}>
-        <Input
-          placeholder='Email'
-          containerStyle={styles.control}
-          value={value.email}
-          onChangeText={(text) => setValue({ ...value, email: text })}
-          leftIcon={<Icon
-            name='envelope'
-            size={16}
-          />}
-        />
+        <View style={styles.wrapper}>
+          <TextInput
+            placeholder='Email'
+            label='Email'
+            value={value.email}
+            onChangeText={(text) => setValue({ ...value, email: text })}
+          />
+        </View>
 
-        <Input
-          placeholder='Username'
-          containerStyle={styles.control}
-          value={value.username}
-          onChangeText={(text) => setValue({ ...value, username: text })}
-          leftIcon={<Icon
-            name='person'
-            size={16}
-          />}
-        />
+        <View style={styles.wrapper}>
+          <TextInput
+            placeholder='Username'
+            label='Username'
+            value={value.username}
+            onChangeText={(text) => setValue({ ...value, username: text })}
+          />
+        </View>
 
-        <Input
-          placeholder='Password'
-          containerStyle={styles.control}
-          value={value.password}
-          onChangeText={(text) => setValue({ ...value, password: text })}
-          secureTextEntry={true}
-          leftIcon={<Icon
-            name='key'
-            size={16}
-          />}
-        />
+        <View style={styles.wrapper}>
+          <TextInput
+            placeholder='Password'
+            label='Password'
+            value={value.password}
+            onChangeText={(text) => setValue({ ...value, password: text })}
+            secureTextEntry={true}
+          />
+        </View>
 
-        <Button title="Sign up" buttonStyle={styles.control} onPress={signUp} />
+        <Button mode='contained' onPress={signUp}>Sign Up</Button>
       </View>
     </View>
   );
@@ -100,6 +101,9 @@ const styles = StyleSheet.create({
   controls: {
     flex: 1,
     width: windowDimensions.width,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 
   control: {
@@ -111,6 +115,18 @@ const styles = StyleSheet.create({
     padding: 10,
     color: '#fff',
     backgroundColor: '#D54826FF',
+  },
+  background: {
+    position: 'absolute',
+    zIndex: -1,
+    flex: 1,
+    alignItems: 'center',
+    width: windowDimensions.width,
+    height: windowDimensions.height,
+  },
+  wrapper: {
+    marginBottom: 16,
+    width: windowDimensions.width / 8 * 7,
   }
 });
 

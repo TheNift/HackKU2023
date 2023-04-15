@@ -115,7 +115,7 @@ const TavernPage: React.FC<StackScreenProps<any>> = ({ navigation }) => {
             style={styles.fab}
             onPress={() => { setFollowVisible(true)}}
           />
-          <Button title="Edit Me" onPress={() => navigation.navigate('Me')} style={styles.signOut}/>
+          <Button mode="contained" onPress={() => navigation.navigate('Me')} style={styles.signOut}>Edit Me</Button>
         </ScrollView>
         <FollowUsernamePopup visible={followVisible} exit={() => setFollowVisible(false)}></FollowUsernamePopup>
         <ShareInfoPopup visible={shareVisible} exit={() => setShareVisible(false)}></ShareInfoPopup>
