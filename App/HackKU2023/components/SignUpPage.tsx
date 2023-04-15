@@ -3,6 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { StackScreenProps } from '@react-navigation/stack';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../backend/Firebase';
 
 const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
   const [value, setValue] = React.useState({
@@ -11,7 +13,7 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
     error: ''
   })
 
-  function signUp() {
+  async function signUp() {
     if (value.email === '' || value.password === '') {
       setValue({
         ...value,
@@ -20,10 +22,15 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
       return;
     }
 
-    setValue({
-      ...value,
-      error: ''
-    })
+    try {
+      await createUserWithEmailAndPassword(auth, value.email, value.password);
+      navigation.navigate('Sign In');
+    } catch (error) {
+      setValue({
+        ...value,
+        error: error.message
+      })
+    }
   }
 
   return (
