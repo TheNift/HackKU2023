@@ -3,20 +3,22 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { StackScreenProps } from '@react-navigation/stack';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../backend/Firebase';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth, database } from '../backend/Firebase';
+import { ref, set } from "firebase/database";
 
 const windowDimensions = Dimensions.get('window');
 
 const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
   const [value, setValue] = React.useState({
     email: '',
+    username: '',
     password: '',
     error: ''
   })
 
   async function signUp() {
-    if (value.email === '' || value.password === '') {
+    if (value.email === '' || value.password === '' || value.username == '') {
       setValue({
         ...value,
         error: 'Email and password are mandatory.'
@@ -26,7 +28,11 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 
     try {
       await createUserWithEmailAndPassword(auth, value.email, value.password);
-      navigation.navigate('Sign In');
+      await signInWithEmailAndPassword(auth, value.email, value.password);
+      set(ref(database, 'usernames/' + auth.currentUser?.uid), {
+        username: value.username
+      });
+      navigation.navigate('Home');
     } catch (error) {
       setValue({
         ...value,
@@ -49,6 +55,17 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
           onChangeText={(text) => setValue({ ...value, email: text })}
           leftIcon={<Icon
             name='envelope'
+            size={16}
+          />}
+        />
+
+        <Input
+          placeholder='Username'
+          containerStyle={styles.control}
+          value={value.username}
+          onChangeText={(text) => setValue({ ...value, username: text })}
+          leftIcon={<Icon
+            name='person'
             size={16}
           />}
         />

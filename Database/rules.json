@@ -1,6 +1,13 @@
 {
   "rules": {
     ".read": false,
-    ".write": false
+    ".write": false,
+    "users": {
+      ".read": true,
+      "$userId": {
+        ".write": "!data.exists() && auth != null && auth.uid == $userId",
+        ".validate": "newData.isString()"
+      }
+    }
   }
 }

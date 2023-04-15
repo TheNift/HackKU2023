@@ -15,6 +15,7 @@ import { Button } from 'react-native-elements';
 import { signOut } from 'firebase/auth'
 import { auth } from '../backend/Firebase';
 import { useAuthentication } from '../backend/useAuthentication';
+import getUid from '../backend/getUid';
 
 const windowDimensions = Dimensions.get('window');
 
