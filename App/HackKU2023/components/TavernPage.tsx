@@ -4,7 +4,8 @@ import {
   Text,
   View,
   ScrollView,
-  Dimensions
+  Dimensions,
+  Pressable
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import {
@@ -82,7 +83,11 @@ export default function TavernPage() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <View style={styles.homeHeader}>
-          <Text style={styles.headerText}>Adventurers for {user?.email}</Text>
+          <Text style={styles.headerText}>Adventurers</Text>
+          <View style={styles.headerButtonBox}>
+            <Pressable style={styles.headerButton}/>
+            <Pressable style={styles.headerButton}/>
+          </View>
         </View>
         <ScrollView>
           <View style={styles.adventurersWrapper}>
@@ -111,9 +116,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: 'flex',
-    backgroundColor: '#fff',
+    backgroundColor: '#E8DCB8',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 16,
   },
   homeHeader: {
     width: windowDimensions.width,
@@ -121,7 +127,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',      
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 16,   
   },
   headerText: {
     color: '#000',
@@ -145,4 +153,15 @@ const styles = StyleSheet.create({
     width: windowDimensions.width / 8,
     alignSelf: 'center',
   },
+  headerButtonBox: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  headerButton: {
+    width: 48,
+    height: 48,
+    borderColor: '#000',
+    borderWidth: 1,
+    marginLeft: 8,
+  }
 });  
