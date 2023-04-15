@@ -4,9 +4,9 @@ import {
   Text,
   View,
   ScrollView,
-  StatusBar,
   Dimensions
 } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import {
   SafeAreaView,
   SafeAreaProvider
