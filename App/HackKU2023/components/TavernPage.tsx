@@ -41,6 +41,13 @@ export default class TavernPage extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    display: 'flex',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   homeHeader: {
     width: windowDimensions.width,
     borderColor: '#000',
