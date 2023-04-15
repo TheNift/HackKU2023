@@ -14,6 +14,7 @@ import {
 } from 'react-native-safe-area-context';  
 // import { Button } from 'react-native-elements';
 import { List, Surface, useTheme, Button, FAB } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient'
 import { signOut } from 'firebase/auth'
 import { auth } from '../backend/Firebase';
 import { useAuthentication } from '../backend/useAuthentication';
@@ -86,14 +87,25 @@ export default function TavernPage() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
+        <LinearGradient
+            // Background Linear Gradient
+            colors={['#fff', '#CBC3E3', '#baa7da']}
+            start={[0.5, 0]}
+            end={[0.5, 1]}
+            style={styles.background}
+          />
         <ScrollView>
           <View style={styles.adventurersWrapper}>
             <View>
-              <Text style={styles.adventurersHeaderText}>Questless!</Text>
+              <Surface style={styles.sectionHeader} elevation={5} mode='elevated'>
+                <Text style={styles.adventurersHeaderText}>Questless!</Text>
+              </Surface>
               {renderUsers(true)}
             </View>
             <View>
-              <Text style={styles.adventurersHeaderText}>Busy Questing...</Text>
+              <Surface style={styles.sectionHeader} elevation={5} mode='elevated'>
+                <Text style={styles.adventurersHeaderText}>Busy Questing...</Text>
+              </Surface>
               {renderUsers(false)}
             </View>
           </View>
@@ -118,19 +130,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 16,
   },
   adventurersWrapper: {
     width: windowDimensions.width,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
+    marginLeft: 16,
   },
   adventurersHeaderText: {
     color: '#000',
     fontSize: 24,
     marginBottom: 8,
     marginTop: 12,
+    marginLeft: 8,
   },
   adventurerNameText: {
     color: '#000',
@@ -164,5 +177,19 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
+  },
+  background: {
+    position: 'absolute',
+    zIndex: -1,
+    flex: 1,
+    alignItems: 'center',
+    width: windowDimensions.width,
+    height: windowDimensions.height,
+  },
+  sectionHeader: {
+    width: windowDimensions.width,
+    backgroundColor: '#fff',
+    marginLeft: -16,
+    marginBottom: 16,
   },
 });  
