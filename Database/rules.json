@@ -2,11 +2,17 @@
   "rules": {
     ".read": false,
     ".write": false,
-    "users": {
+    "usernames": {
       ".read": true,
       "$userId": {
         ".write": "!data.exists() && auth != null && auth.uid == $userId",
         ".validate": "newData.isString()"
+      }
+    },
+    "follows": {
+      "$userId": {
+        ".write": true,
+        ".read": true
       }
     }
   }

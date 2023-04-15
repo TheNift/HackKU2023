@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,6 +16,7 @@ import { signOut } from 'firebase/auth'
 import { auth } from '../backend/Firebase';
 import { useAuthentication } from '../backend/useAuthentication';
 import getUid from '../backend/getUid';
+import FollowUsernamePopup from './FollowUsernamePopup';
 
 const windowDimensions = Dimensions.get('window');
 
@@ -52,6 +53,8 @@ const tempUserArray = [
 
 export default function TavernPage() {
   const { user } = useAuthentication();
+  const [followVisible, setFollowVisible] = useState(false);
+  const [addVisible, setAddVisible] = useState(false);
 
   let renderUsers = (active: boolean) => { // paramater true for active users, false for busy users
     if(active == true) {
@@ -93,7 +96,11 @@ export default function TavernPage() {
             </View>
           </View>
           <Button title="Sign Out" onPress={() => signOut(auth)} style={styles.signOut}/>
+          <Button title="Follow" onPress={() => {
+            setFollowVisible(true)
+          }}/>
         </ScrollView>
+        <FollowUsernamePopup visible={followVisible} exit={() => setFollowVisible(false)}></FollowUsernamePopup>
         <StatusBar style="auto" />  
       </SafeAreaView>
     </SafeAreaProvider>

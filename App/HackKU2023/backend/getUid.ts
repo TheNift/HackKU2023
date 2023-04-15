@@ -8,6 +8,7 @@ export default async function(name: string) {
       snapshot.forEach((childSnapshot) => {
         resolve(childSnapshot.key)
       });
+      resolve(undefined);
     }, {
       onlyOnce: true
     });

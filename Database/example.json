@@ -1,5 +1,5 @@
 {
-  "users": {
+  "usernames": {
     "$user0": {
       "username": "jsmith"
     }
@@ -8,6 +8,11 @@
     "$user0": {
       "$user1": 1,
       "$user2": 0
+    }
+  },
+  "follows": {
+    "$user0": {
+      "$user1": true
     }
   },
   "level0": {
