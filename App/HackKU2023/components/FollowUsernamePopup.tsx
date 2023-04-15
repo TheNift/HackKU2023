@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+import {Alert, Modal, StyleSheet, Text, Pressable, View, Dimensions} from 'react-native';
 import { auth, database } from '../backend/Firebase';
 import { useAuthentication } from '../backend/useAuthentication';
 import { set, ref } from 'firebase/database';
@@ -7,6 +7,8 @@ import { Input } from 'react-native-elements';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import getUid from '../backend/getUid';
+
+const windowDimensions = Dimensions.get('window');
 
 export default function FollowUsernamePopup(props) {
   const [value, setValue] = React.useState({
@@ -82,6 +84,7 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
+    width: windowDimensions.width / 2,
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,

@@ -13,6 +13,7 @@ import {
   SafeAreaProvider
 } from 'react-native-safe-area-context';  
 import { Button } from 'react-native-elements';
+import { List, Surface } from 'react-native-paper';
 import { signOut } from 'firebase/auth'
 import { auth } from '../backend/Firebase';
 import { useAuthentication } from '../backend/useAuthentication';
@@ -61,17 +62,17 @@ export default function TavernPage() {
     if(active == true) {
       return tempUserArray.map((user) => {
         return (
-          <View key={user.key}>
+          <Surface key={user.key} style={styles.surface} elevation={2} mode='elevated'>
             <Text style={styles.adventurerNameText}>{user.name}</Text>
-          </View>
+          </Surface>
         );
       });
     } else if (active == false) {
       return tempUserArray.map((user) => {
         return (
-          <View key={user.key}>
+          <Surface key={user.key} style={styles.surface} elevation={2} mode='elevated'>
             <Text style={styles.adventurerNameText}>{user.name}</Text>
-          </View>
+          </Surface>
         );
       });
     } else {
@@ -144,6 +145,8 @@ const styles = StyleSheet.create({
   adventurersHeaderText: {
     color: '#000',
     fontSize: 24,
+    marginBottom: 8,
+    marginTop: 12,
   },
   adventurerNameText: {
     color: '#000',
@@ -163,5 +166,13 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderWidth: 1,
     marginLeft: 8,
-  }
+  },
+  surface: {
+    width: 80,
+    padding: 8,
+    marginBottom: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+  },
 });  
