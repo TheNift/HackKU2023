@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+
+const windowDimensions = Dimensions.get('window');
 
 const auth = getAuth();
 
@@ -79,10 +81,11 @@ const styles = StyleSheet.create({
 
   controls: {
     flex: 1,
+    width: windowDimensions.width,
   },
 
   control: {
-    marginTop: 10
+    marginTop: 10,
   },
 
   error: {

@@ -17,7 +17,6 @@ import { auth } from '../backend/Firebase';
 import { useAuthentication } from '../backend/useAuthentication';
 
 const windowDimensions = Dimensions.get('window');
-const screenDimensions = Dimensions.get('screen');
 
 export default function TavernPage() {
   const { user } = useAuthentication();
@@ -28,16 +27,16 @@ export default function TavernPage() {
         <View style={styles.homeHeader}>
           <Text style={styles.headerText}>Adventurers for {user?.email}</Text>
         </View>
-        <Button title="Sign Out" onPress={() => signOut(auth)} />
         <ScrollView>
           <View style={styles.adventurersWrapper}>
             <View>
-              <Text>Questless</Text>
+              <Text style={styles.adventurersHeaderText}>Questless!</Text>
             </View>
             <View>
-              <Text>Busy Questing...</Text>
+              <Text style={styles.adventurersHeaderText}>Busy Questing...</Text>
             </View>
           </View>
+          <Button title="Sign Out" onPress={() => signOut(auth)} style={styles.signOut}/>
         </ScrollView>
         <StatusBar style="auto" />  
       </SafeAreaView>
@@ -66,8 +65,17 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   adventurersWrapper: {
+    width: windowDimensions.width,
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+  },
+  adventurersHeaderText: {
+    color: '#000',
+    fontSize: 24,
+  },
+  signOut: {
+    width: windowDimensions.width / 8,
+    alignSelf: 'center',
   },
 });  
