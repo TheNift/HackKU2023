@@ -33,7 +33,7 @@ const tempUserArray = [
             }
         },
         level2: {
-            09163: {
+            9163: {
                 name: 'Phone',
                 value: '(123)456-7890'
             }
@@ -53,7 +53,7 @@ const tempUserArray = [
     }
 ];
 
-const ViewUserPage = () => {
+const ViewUserPage = ({navigation, route}) => {
     let parseUser = (request: string) => {
         let returnVal;
         for(let i in tempUserArray) {

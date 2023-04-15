@@ -3,17 +3,21 @@ import { BottomNavigation, Text } from 'react-native-paper';
 import SelfEditPage from './SelfEditPage';
 import TavernPage from './TavernPage';
 
-const HomePageNav = () => {
+const HomePageNav = ({navigation, route}) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'allies', title: 'Allies', focusedIcon: 'heart'},
     { key: 'me', title: 'Me', focusedIcon: 'album' },
   ]);
 
-  const renderScene = BottomNavigation.SceneMap({
-    allies: TavernPage,
-    me: SelfEditPage
-  });
+  const renderScene = ({ route, jumpTo })  => {
+    switch (route.key) {
+      case 'allies':
+        return <TavernPage navigation={navigation} jumpTo={jumpTo} />;
+      case 'me':
+        return <SelfEditPage jumpTo={jumpTo} />;
+    }
+  };
 
   return (
     <BottomNavigation

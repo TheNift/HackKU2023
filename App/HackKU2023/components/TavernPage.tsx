@@ -56,7 +56,7 @@ const tempUserArray = [
   },
 ];
 
-const TavernPage = () => {
+const TavernPage = (params) => {
   const { user } = useAuthentication();
   const [followVisible, setFollowVisible] = useState(false);
   const [shareVisible, setShareVisible] = useState(false);
@@ -115,7 +115,7 @@ const TavernPage = () => {
             style={styles.fab}
             onPress={() => { setFollowVisible(true)}}
           />
-          <Button mode="contained" onPress={() => navigation.navigate('Me')} style={styles.signOut}>Edit Me</Button>
+          <Button mode="contained" onPress={() => params.navigation.navigate('View User')}>View User</Button>
         </ScrollView>
         <FollowUsernamePopup visible={followVisible} exit={() => setFollowVisible(false)}></FollowUsernamePopup>
         <ShareInfoPopup visible={shareVisible} exit={() => setShareVisible(false)}></ShareInfoPopup>

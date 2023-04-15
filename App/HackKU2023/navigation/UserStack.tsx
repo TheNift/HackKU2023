@@ -5,6 +5,7 @@ import CustomNavigationBar from './CustomNavigationBar';
 import TavernPage from '../components/TavernPage';
 import SelfEditPage from '../components/SelfEditPage';
 import HomePageNav from '../components/HomePage';
+import ViewUserPage from '../components/ViewUserPage';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ export default function UserStack() {
           header: (props) => <CustomNavigationBar {...props} />
         }}>
         <Stack.Screen name="Home" component={HomePageNav} />
+        <Stack.Screen name="View User" component={ViewUserPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
