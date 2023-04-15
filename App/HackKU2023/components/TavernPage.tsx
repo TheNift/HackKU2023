@@ -19,9 +19,62 @@ import getUid from '../backend/getUid';
 
 const windowDimensions = Dimensions.get('window');
 
+const tempUserArray = [
+  {
+    name: "user00",
+    key: 'vybadlhva',
+  },
+  {
+    name: "user01",
+    key: 'nvjaahjl',
+  },
+  {
+    name: "user02",
+    key: 'avuniap',
+  },
+  {
+    name: "user03",
+    key: 'ghiupwwpt',
+  },
+  {
+    name: "user04",
+    key: 'u8jfqpjfpa',
+  },
+  {
+    name: "user05",
+    key: 'hfauepifauqp',
+  },
+  {
+    name: "user06",
+    key: 'jfieoaajfip',
+  },
+];
+
 export default function TavernPage() {
   const { user } = useAuthentication();
 
+  let renderUsers = (active: boolean) => { // paramater true for active users, false for busy users
+    if(active == true) {
+      return tempUserArray.map((user) => {
+        return (
+          <View key={user.key}>
+            <Text style={styles.adventurerNameText}>{user.name}</Text>
+          </View>
+        );
+      });
+    } else if (active == false) {
+      return tempUserArray.map((user) => {
+        return (
+          <View key={user.key}>
+            <Text style={styles.adventurerNameText}>{user.name}</Text>
+          </View>
+        );
+      });
+    } else {
+      return(null);
+    }
+  };
+  
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
@@ -32,9 +85,11 @@ export default function TavernPage() {
           <View style={styles.adventurersWrapper}>
             <View>
               <Text style={styles.adventurersHeaderText}>Questless!</Text>
+              {renderUsers(true)}
             </View>
             <View>
               <Text style={styles.adventurersHeaderText}>Busy Questing...</Text>
+              {renderUsers(false)}
             </View>
           </View>
           <Button title="Sign Out" onPress={() => signOut(auth)} style={styles.signOut}/>
@@ -74,6 +129,10 @@ const styles = StyleSheet.create({
   adventurersHeaderText: {
     color: '#000',
     fontSize: 24,
+  },
+  adventurerNameText: {
+    color: '#000',
+    fontSize: 16,
   },
   signOut: {
     width: windowDimensions.width / 8,
