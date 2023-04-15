@@ -20,6 +20,7 @@ import { useAuthentication } from '../backend/useAuthentication';
 import getUid from '../backend/getUid';
 import FollowUsernamePopup from './FollowUsernamePopup';
 import ShareInfoPopup from './ShareInfoPopup';
+import { StackScreenProps } from '@react-navigation/stack';
 
 const windowDimensions = Dimensions.get('window');
 
@@ -54,7 +55,7 @@ const tempUserArray = [
   },
 ];
 
-export default function TavernPage() {
+const TavernPage: React.FC<StackScreenProps<any>> = ({ navigation }) => {
   const { user } = useAuthentication();
   const [followVisible, setFollowVisible] = useState(false);
   const [shareVisible, setShareVisible] = useState(false);
@@ -110,6 +111,7 @@ export default function TavernPage() {
           <Button title="Share" onPress={() => {
             setShareVisible(true)
           }}/>
+          <Button title="Edit Me" onPress={() => navigation.navigate('Me')} style={styles.signOut}/>
         </ScrollView>
         <FollowUsernamePopup visible={followVisible} exit={() => setFollowVisible(false)}></FollowUsernamePopup>
         <ShareInfoPopup visible={shareVisible} exit={() => setShareVisible(false)}></ShareInfoPopup>
@@ -182,3 +184,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 });  
+
+export default TavernPage;
