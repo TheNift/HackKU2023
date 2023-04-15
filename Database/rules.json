@@ -20,6 +20,30 @@
         ".write": "auth != null && auth.uid == $userId",
         ".read": "true"
       }
+    },
+    "level0": {
+      "$userId": {
+        ".write": "auth != null && auth.uid == $userId",
+        ".read": "true"
+      }
+    },
+    "level1": {
+      "$userId": {
+        ".write": "auth != null && auth.uid == $userId",
+        ".read": "auth != null && (auth.uid == $userId || root.child('levels').child(auth.uid).child($userId).val() >= 1)"
+      }
+    },
+    "level2": {
+      "$userId": {
+        ".write": "auth != null && auth.uid == $userId",
+        ".read": "auth != null && (auth.uid == $userId || root.child('levels').child(auth.uid).child($userId).val() >= 2)"
+      }
+    },
+    "level3": {
+      "$userId": {
+        ".write": "auth != null && auth.uid == $userId",
+        ".read": "auth != null && (auth.uid == $userId || root.child('levels').child(auth.uid).child($userId).val() >= 3)"
+      }
     }
   }
 }
