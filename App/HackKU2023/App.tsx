@@ -4,10 +4,8 @@ import { Text, View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import RootNavigation from './navigation/Index';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <RootNavigation />
-    )
-  };
+export default function App() {
+  return (
+    <RootNavigation />
+  )
 }
