@@ -3,7 +3,8 @@ import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
 import { auth, database } from '../backend/Firebase';
 import { useAuthentication } from '../backend/useAuthentication';
 import { set, ref } from 'firebase/database';
-import { Input, Button } from 'react-native-elements';
+import { Input } from 'react-native-elements';
+import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import getUid from '../backend/getUid';
 
@@ -37,6 +38,8 @@ export default function FollowUsernamePopup(props) {
               size={16}
             />}
           />
+
+          <Button mode="outlined">Follow</Button>
 
           <Pressable
             style={[styles.button, styles.buttonClose]}
