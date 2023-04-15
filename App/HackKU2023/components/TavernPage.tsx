@@ -12,8 +12,8 @@ import {
   SafeAreaView,
   SafeAreaProvider
 } from 'react-native-safe-area-context';  
-import { Button } from 'react-native-elements';
-import { List, Surface } from 'react-native-paper';
+// import { Button } from 'react-native-elements';
+import { List, Surface, useTheme, Button, FAB } from 'react-native-paper';
 import { signOut } from 'firebase/auth'
 import { auth } from '../backend/Firebase';
 import { useAuthentication } from '../backend/useAuthentication';
@@ -59,6 +59,7 @@ export default function TavernPage() {
   const [followVisible, setFollowVisible] = useState(false);
   const [shareVisible, setShareVisible] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
+  const theme = useTheme();
 
   let renderUsers = (active: boolean) => { // paramater true for active users, false for busy users
     if(active == true) {
@@ -85,13 +86,6 @@ export default function TavernPage() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <View style={styles.homeHeader}>
-          <Text style={styles.headerText}>Adventurers</Text>
-          <View style={styles.headerButtonBox}>
-            <Pressable style={styles.headerButton}/>
-            <Pressable style={styles.headerButton}/>
-          </View>
-        </View>
         <ScrollView>
           <View style={styles.adventurersWrapper}>
             <View>
@@ -103,13 +97,11 @@ export default function TavernPage() {
               {renderUsers(false)}
             </View>
           </View>
-          <Button title="Sign Out" onPress={() => signOut(auth)} style={styles.signOut}/>
-          <Button title="Follow" onPress={() => {
-            setFollowVisible(true)
-          }}/>
-          <Button title="Share" onPress={() => {
-            setShareVisible(true)
-          }}/>
+          <FAB
+            icon="plus"
+            style={styles.fab}
+            onPress={() => { setFollowVisible(true)}}
+          />
         </ScrollView>
         <FollowUsernamePopup visible={followVisible} exit={() => setFollowVisible(false)}></FollowUsernamePopup>
         <ShareInfoPopup visible={shareVisible} exit={() => setShareVisible(false)}></ShareInfoPopup>
@@ -123,24 +115,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: 'flex',
-    backgroundColor: '#E8DCB8',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 16,
-  },
-  homeHeader: {
-    width: windowDimensions.width,
-    borderColor: '#000',
-    borderWidth: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingLeft: 16,   
-  },
-  headerText: {
-    color: '#000',
-    fontSize: 32,
+    paddingLeft: 16,
   },
   adventurersWrapper: {
     width: windowDimensions.width,
@@ -180,5 +158,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
   },
 });  
