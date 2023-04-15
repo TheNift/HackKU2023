@@ -11,8 +11,14 @@
     },
     "follows": {
       "$userId": {
-        ".write": true,
-        ".read": true
+        ".write": "auth != null && auth.uid == $userId",
+        ".read": "auth != null && auth.uid == $userId"
+      }
+    },
+    "levels": {
+      "$userId": {
+        ".write": "auth != null && auth.uid == $userId",
+        ".read": "true"
       }
     }
   }

@@ -19,6 +19,7 @@ import { auth } from '../backend/Firebase';
 import { useAuthentication } from '../backend/useAuthentication';
 import getUid from '../backend/getUid';
 import FollowUsernamePopup from './FollowUsernamePopup';
+import ShareInfoPopup from './ShareInfoPopup';
 
 const windowDimensions = Dimensions.get('window');
 
@@ -56,6 +57,7 @@ const tempUserArray = [
 export default function TavernPage() {
   const { user } = useAuthentication();
   const [followVisible, setFollowVisible] = useState(false);
+  const [shareVisible, setShareVisible] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
 
   let renderUsers = (active: boolean) => { // paramater true for active users, false for busy users
@@ -105,8 +107,12 @@ export default function TavernPage() {
           <Button title="Follow" onPress={() => {
             setFollowVisible(true)
           }}/>
+          <Button title="Share" onPress={() => {
+            setShareVisible(true)
+          }}/>
         </ScrollView>
         <FollowUsernamePopup visible={followVisible} exit={() => setFollowVisible(false)}></FollowUsernamePopup>
+        <ShareInfoPopup visible={shareVisible} exit={() => setShareVisible(false)}></ShareInfoPopup>
         <StatusBar style="auto" />  
       </SafeAreaView>
     </SafeAreaProvider>

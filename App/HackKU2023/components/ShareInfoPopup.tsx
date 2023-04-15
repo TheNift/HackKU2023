@@ -4,10 +4,12 @@ import { database } from '../backend/Firebase';
 import { useAuthentication } from '../backend/useAuthentication';
 import getUid from '../backend/getUid';
 import { set, ref } from 'firebase/database';
+import VisibilityPickerComponent from './VisibilityPickerComponent';
 
-export default function FollowUsernamePopup(props) {
+export default function ShareInfoPopup(props) {
   const [value, setValue] = React.useState({
     username: '',
+    visibility: 0,
     error: ''
   })
 
@@ -16,7 +18,7 @@ export default function FollowUsernamePopup(props) {
   return (
     <Portal>
       <Dialog visible={props.visible} onDismiss={props.exit}>
-        <Dialog.Title>Follow User</Dialog.Title>
+        <Dialog.Title>Share Traits</Dialog.Title>
         <Dialog.Content>
           <TextInput
             label='Username'
@@ -26,6 +28,10 @@ export default function FollowUsernamePopup(props) {
           <HelperText type="error" visible={value.error != ''}>
             {value.error}
           </HelperText>
+          <VisibilityPickerComponent
+            value={value.visibility}
+            onChangeValue={(vis) => setValue({ ...value, visibility: vis })}
+            />
         </Dialog.Content>
         <Dialog.Actions>
           <Button onPress={async () => {
@@ -47,10 +53,10 @@ export default function FollowUsernamePopup(props) {
                   return;
                 }
                 
-                set(ref(database, 'follows/' + user.uid + '/' + uid), true);
+                set(ref(database, 'levels/' + user.uid + '/' + uid), value.visibility);
                 props.exit()
               }
-            }}>Add</Button>
+            }}>Share</Button>
         </Dialog.Actions>
       </Dialog>
     </Portal>

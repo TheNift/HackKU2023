@@ -1,23 +1,35 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
-import { Button } from 'react-native-elements';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import { SegmentedButtons } from 'react-native-paper';
 
 export default function VisibilityPickerComponent(props) {
+  const [value, setValue] = React.useState('0');
+
   return (
-    <View style={styles.container}>
-      
-    </View>
+    <SegmentedButtons
+      value={value}
+      onValueChange={(value) => {
+        setValue(value);
+        props.onChangeValue(parseInt(value));
+      }}
+      buttons={[
+        {
+          value: '0',
+          label: 'Public'
+        },
+        {
+          value: '1',
+          label: 'Village'
+        },
+        {
+          value: '2',
+          label: 'Guild'
+        },
+        {
+          value: '3',
+          label: 'Party'
+        }
+      ]}
+    />
   );
 };
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: '#fff',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  }
-});
