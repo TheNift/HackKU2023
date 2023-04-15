@@ -11,27 +11,17 @@ export default function StringTrait(props) {
   const { user } = useAuthentication();
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.grow}
-        label={props.name}
-        value={props.value}
-        onChangeText={text => props.onChangeValue(text)}
-        mode='flat' />
-      <VisibilityPickerComponent/>
-    </View>
+    <TextInput
+      style={styles.spacing}
+      label={props.name}
+      value={props.value}
+      onChangeText={text => props.onChangeValue(text)}
+      mode='flat' />
   )
 };
 
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    padding: '8px'
-  },
-  grow: {
-    flexGrow: 1
+  spacing: {
+    marginBottom: 12
   }
 });

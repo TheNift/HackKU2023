@@ -55,7 +55,7 @@ const tempUserArray = [
   },
 ];
 
-const TavernPage: React.FC<StackScreenProps<any>> = ({ navigation }) => {
+const TavernPage = () => {
   const { user } = useAuthentication();
   const [followVisible, setFollowVisible] = useState(false);
   const [shareVisible, setShareVisible] = useState(false);
