@@ -1,0 +1,29 @@
+{
+  "users": {
+    "$user0": {
+      "username": "jsmith"
+    }
+  },
+  "levels": {
+    "$user0": {
+      "$user1": 1,
+      "$user2": 0
+    }
+  },
+  "level0": {
+    "$user0": {
+      "$trait0": {
+        "type": "name",
+        "value": "John Smith"
+      }
+    }
+  },
+  "level1": {
+    "$user0": {
+      "$trait0": {
+        "type": "phone",
+        "value": "(555) 555 - 5555"
+      }
+    }
+  }
+}
