@@ -13,11 +13,11 @@ export default function UserStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="Tavern"
         screenOptions={{
           header: (props) => <CustomNavigationBar {...props} />
         }}>
-        <Stack.Screen name="Home" component={HomePageNav} />
+        <Stack.Screen name="Tavern" component={HomePageNav} />
         <Stack.Screen name="View User" component={ViewUserPage} />
       </Stack.Navigator>
     </NavigationContainer>

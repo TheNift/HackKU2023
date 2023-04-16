@@ -33,7 +33,7 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
       set(ref(database, 'usernames/' + auth.currentUser?.uid), {
         username: value.username
       });
-      navigation.navigate('Home');
+      navigation.navigate('Tavern');
     } catch (error) {
       setValue({
         ...value,
