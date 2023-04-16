@@ -10,6 +10,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { database } from '../backend/Firebase';
 import { ref, get } from 'firebase/database';
 import { Alert } from 'react-native';
+import traitlist from '../backend/traitlist';
 
 const windowDimensions = Dimensions.get('window');
 
@@ -76,9 +77,11 @@ const ViewUserPage = ({navigation, route}) => {
     };
 
     let organizeUserData = () => {
-        let datapoints = ["Name","Email","Address","Phone","Twitter","Instagram","Facebook"];
+        let datapoints = traitlist.map((trait) => trait.value);
         return datapoints.map((point) => {
             let result = parseUser(point);
+            if (result == undefined) return null;
+            
             return (
                 <View key={point} style={styles.userInfo}>
                     <Text style={styles.userInfoText}><Text style={styles.bold}>{point}: </Text>{result}</Text>

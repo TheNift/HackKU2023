@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { List, Button } from 'react-native-paper';
+import { List, Button, FAB } from 'react-native-paper';
 import { auth, database } from '../backend/Firebase';
 import { useAuthentication } from '../backend/useAuthentication';
 import getUid from '../backend/getUid';
@@ -7,8 +7,10 @@ import { set, ref, onValue, get } from 'firebase/database';
 import VisibilityPickerComponent from './VisibilityPickerComponent';
 import StringTrait from './StringTrait'
 import { ScrollView } from 'react-native-gesture-handler';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import TextTraitPicker from './TextTraitPicker';
+import ShareInfoPopup from './ShareInfoPopup';
+import { Alert } from 'react-native';
 
 export default function SelfEditPage(props) {
   const [publicExpanded, setPublicExpanded] = React.useState(true);
@@ -20,6 +22,8 @@ export default function SelfEditPage(props) {
   const [villageTraits, setVillageTraits] = React.useState({});
   const [guildTraits, setGuildTraits] = React.useState({});
   const [partyTraits, setPartyTraits] = React.useState({});
+
+  const [shareVisible, setShareVisible] = React.useState(false);
 
   const { user } = useAuthentication();
 
@@ -43,6 +47,27 @@ export default function SelfEditPage(props) {
   let addTrait = (traits, setTraits) => {
     // TODO validate no duplicates
     return (selected) => {
+      if (selected._id in publicTraits)
+      {
+        Alert.alert("Cannot add duplicate trait");
+        return;
+      }
+      if (selected._id in villageTraits)
+      {
+        Alert.alert("Cannot add duplicate trait");
+        return;
+      }
+      if (selected._id in guildTraits)
+      {
+        Alert.alert("Cannot add duplicate trait");
+        return;
+      }
+      if (selected._id in partyTraits)
+      {
+        Alert.alert("Cannot add duplicate trait");
+        return;
+      }
+
       let copy = {...traits};
       copy[selected._id] = { name: selected.value, value: '' };
       setTraits(copy);
@@ -79,6 +104,8 @@ export default function SelfEditPage(props) {
   };
 
   return (
+    <View>
+      
     <ScrollView>
       <Button onPress={updateDatabase}>Save</Button>
       <List.Section>
@@ -108,12 +135,26 @@ export default function SelfEditPage(props) {
         </List.Accordion>
       </List.Section>
     </ScrollView>
+      <FAB
+        icon="share"
+        style={styles.fab}
+        onPress={() => { setShareVisible(true)}}
+      />
+      <ShareInfoPopup visible={shareVisible} exit={() => setShareVisible(false)}></ShareInfoPopup>
+    </View>
   )
 };
 
 const styles = StyleSheet.create({
   spacing: {
     marginBottom: 12
-  }
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 32,
+    backgroundColor: '#99343b',
+  },
 });
 

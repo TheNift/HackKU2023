@@ -7,18 +7,15 @@ import {
   SafeAreaView,
   SafeAreaProvider
 } from 'react-native-safe-area-context';  
+import traitlist from '../backend/traitlist';
 
 const windowDimensions = Dimensions.get('window');
 
 export default function TextTraitPicker(props) {
   const [trait, setTrait] = React.useState({
     value: 'Name',
-    list: [
-      { _id: 'name', value: 'Name' },
-      { _id: 'phone', value: 'Phone' },
-      { _id: 'email', value: 'Email' },
-    ],
-    selectedList: [{ _id: 'name', value: 'Name' }],
+    list: traitlist,
+    selectedList: [traitlist[0]],
     error: '',
   });
 

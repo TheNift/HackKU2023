@@ -16,9 +16,9 @@ const theme = {
     text: '#000',
     background: '#fff',
     surface: '#fff',
-    backdrop: '#99343b',
     onSurface: '#99343b',
     disabled: '#99343b',
+    placeholder: '#99343b',
   },
 };
 
