@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { Button } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 import { FlipInEasyX } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient'
 
@@ -18,6 +18,8 @@ const WelcomeScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
         style={styles.background}
       />
       <View style={styles.buttons}>
+        <Text variant="displayMedium">Ring Tavern</Text>
+        <Text variant="bodyMedium" style={{padding: 8}}>Welcome to Ring Tavern, the circular contact manager! Keep your allies, acquaintances, and annoyances up to date on your info. Share with the world, or with only a few best friends. You've got control with Ring Tavern.</Text>
         <View style={styles.button}>
           <Button mode='contained' onPress={() => navigation.navigate('Sign In')}>Sign In</Button>
         </View>
