@@ -7,45 +7,46 @@ import {
 } from 'react-native-safe-area-context'; 
 import { List, Surface, useTheme, Button, FAB, Avatar } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient'
+import { Alert } from 'react-native';
 
 const windowDimensions = Dimensions.get('window');
 
 const tempUserArray = [
     {
         level0: {
-            12123: {
+            "12123": {
                 name: 'Address',
                 value: '1123 Lane',
             },
-            98342: {
+            "98342": {
                 name: 'Name',
                 value: 'John Doe',
             }
         },
         level1: {
-            91657: {
+            "91657": {
                 name: 'Twitter',
                 value: '@bruh',
             },
-            91732: {
+            "91732": {
                 name: 'Instagram',
                 value: '@john_doe',
             }
         },
         level2: {
-            9163: {
+            "9163": {
                 name: 'Phone',
                 value: '(123)456-7890'
             }
         },
         level3: {
-            42391: {
+            "42391": {
                 name: 'Email',
                 value: 'johndoe@hotmail.com'
             }
         },
         level4: {
-            71032: {
+            "71032": {
                 name: 'Facebook',
                 value: '@johnniedoseph'
             }
@@ -58,25 +59,42 @@ const ViewUserPage = ({navigation, route}) => {
         let returnVal;
         for(let i in tempUserArray) {
             for(let j in tempUserArray[i]) {
-                if(j[0] == request) {
-                    returnVal = j[1];
-                }
+               for(let x in tempUserArray[i][j]) {
+                    if(request == tempUserArray[i][j][x]["name"]) {
+                        returnVal = tempUserArray[i][j][x]["value"];
+                    }
+               }
             }
         }
         return returnVal;
     }
+
+    let organizeUserData = () => {
+        let datapoints = ["Name","Email","Address","Phone","Twitter","Instagram","Facebook"];
+        return datapoints.map((point) => {
+            let result = parseUser(point);
+            return (
+                <View key={point} style={styles.userInfo}>
+                    <Text style={styles.userInfoText}><Text style={styles.bold}>{point}: </Text>{result}</Text>
+                </View>
+            );
+        });
+    };
+
     return(
         <SafeAreaProvider>
-            <SafeAreaView>
+            <SafeAreaView style={styles.container}>
                 <LinearGradient
                     // Background Linear Gradient
-                    colors={['#fff', '#CBC3E3', '#baa7da']}
+                    colors={['#fff', '#FFE180', '#f46e44']}
                     start={[0.5, 0]}
                     end={[0.5, 1]}
                     style={styles.background}
                 />
-                <Avatar.Image size={24} source={require('../assets/adaptive-icon.png')}/>
-                <Text>{parseUser('Name')}</Text>
+                <Avatar.Image size={96} source={require('../assets/adaptive-icon.png')} style={styles.icon}/>
+                <View>
+                    {organizeUserData()}
+                </View>
             </SafeAreaView>
         </SafeAreaProvider>
     );
@@ -87,7 +105,7 @@ const styles = StyleSheet.create({
       flex: 1,
       display: 'flex',
       backgroundColor: '#fff',
-      flexDirection: 'row',
+      flexDirection: 'column',
       alignItems: 'center',
     },
     background: {
@@ -98,6 +116,24 @@ const styles = StyleSheet.create({
       width: windowDimensions.width,
       height: windowDimensions.height,
     },
+    userInfo: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: 16,
+    },
+    userInfoText: {
+        fontSize: 16,
+    },
+    bold: {
+        display: 'flex',
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    icon: {
+        marginBottom: 24,
+    }
   });  
   
   export default ViewUserPage;

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import { BottomNavigation, Text } from 'react-native-paper';
 import SelfEditPage from './SelfEditPage';
 import TavernPage from './TavernPage';
@@ -24,8 +25,15 @@ const HomePageNav = ({navigation, route}) => {
       navigationState={{ index, routes }}
       onIndexChange={setIndex}
       renderScene={renderScene}
+      style={styles.container}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#99343b',
+  }
+});
 
 export default HomePageNav;

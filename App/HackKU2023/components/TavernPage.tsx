@@ -90,7 +90,7 @@ const TavernPage = (params) => {
       <SafeAreaView style={styles.container}>
         <LinearGradient
             // Background Linear Gradient
-            colors={['#fff', '#CBC3E3', '#baa7da']}
+            colors={['#fff', '#FFE180', '#f46e44']}
             start={[0.5, 0]}
             end={[0.5, 1]}
             style={styles.background}
@@ -99,15 +99,9 @@ const TavernPage = (params) => {
           <View style={styles.adventurersWrapper}>
             <View>
               <Surface style={styles.sectionHeader} elevation={5} mode='elevated'>
-                <Text style={styles.adventurersHeaderText}>Questless!</Text>
+                <Text style={styles.adventurersHeaderText}>Allies</Text>
               </Surface>
               {renderUsers(true)}
-            </View>
-            <View>
-              <Surface style={styles.sectionHeader} elevation={5} mode='elevated'>
-                <Text style={styles.adventurersHeaderText}>Busy Questing...</Text>
-              </Surface>
-              {renderUsers(false)}
             </View>
           </View>
           <FAB
@@ -119,7 +113,7 @@ const TavernPage = (params) => {
         </ScrollView>
         <FollowUsernamePopup visible={followVisible} exit={() => setFollowVisible(false)}></FollowUsernamePopup>
         <ShareInfoPopup visible={shareVisible} exit={() => setShareVisible(false)}></ShareInfoPopup>
-        <StatusBar style="auto" />  
+        <StatusBar style="dark" />  
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -135,9 +129,11 @@ const styles = StyleSheet.create({
   },
   adventurersWrapper: {
     width: windowDimensions.width,
+    minHeight: windowDimensions.height/5*4,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
+    justifyContent: 'space-between',
     marginLeft: 16,
   },
   adventurersHeaderText: {
@@ -148,23 +144,12 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   adventurerNameText: {
-    color: '#000',
+    color: '#fff',
     fontSize: 16,
   },
   signOut: {
     width: windowDimensions.width / 8,
     alignSelf: 'center',
-  },
-  headerButtonBox: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  headerButton: {
-    width: 48,
-    height: 48,
-    borderColor: '#000',
-    borderWidth: 1,
-    marginLeft: 8,
   },
   surface: {
     width: 80,
@@ -173,12 +158,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
+    backgroundColor: '#99343b',
   },
   fab: {
     position: 'absolute',
     margin: 16,
     right: 0,
-    bottom: 0,
+    bottom: 32,
+    backgroundColor: '#99343b',
   },
   background: {
     position: 'absolute',
@@ -193,6 +180,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginLeft: -16,
     marginBottom: 16,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });  
 

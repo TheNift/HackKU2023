@@ -46,7 +46,7 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
     <View style={styles.container}>
       <LinearGradient
             // Background Linear Gradient
-            colors={['#fff', '#CBC3E3', '#baa7da']}
+            colors={['#fff', '#FFE180', '#f46e44']}
             start={[0.5, 0]}
             end={[0.5, 1]}
             style={styles.background}

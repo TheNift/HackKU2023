@@ -1,7 +1,14 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import { Button } from 'react-native-paper';
 import { PaperSelect } from 'react-native-paper-select';
+import { LinearGradient } from 'expo-linear-gradient'
+import {
+  SafeAreaView,
+  SafeAreaProvider
+} from 'react-native-safe-area-context';  
+
+const windowDimensions = Dimensions.get('window');
 
 export default function TextTraitPicker(props) {
   const [trait, setTrait] = React.useState({
@@ -16,7 +23,8 @@ export default function TextTraitPicker(props) {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaProvider>
+    <SafeAreaView style={styles.container}>
       <View style={styles.grow}>
         <PaperSelect
           label="Select Trait"
@@ -36,7 +44,8 @@ export default function TextTraitPicker(props) {
         />
       </View>
       <Button onPress={() => props.traitPicked(trait.selectedList[0])}>Add Trait</Button>
-    </View>
+    </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
@@ -52,6 +61,17 @@ const styles = StyleSheet.create({
   },
   spacing: {
     marginBottom: 12
+  },
+  background: {
+    position: 'absolute',
+    zIndex: -1,
+    flex: 1,
+    alignItems: 'center',
+    width: windowDimensions.width,
+    height: windowDimensions.height,
+  },
+  noBackground: {
+    backgroundColor: 'none',
   }
 });
 
