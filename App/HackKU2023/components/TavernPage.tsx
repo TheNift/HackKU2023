@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,12 +16,14 @@ import {
 import { List, Surface, useTheme, Button, FAB } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient'
 import { signOut } from 'firebase/auth'
-import { auth } from '../backend/Firebase';
+import { auth, database } from '../backend/Firebase';
 import { useAuthentication } from '../backend/useAuthentication';
 import getUid from '../backend/getUid';
 import FollowUsernamePopup from './FollowUsernamePopup';
 import ShareInfoPopup from './ShareInfoPopup';
 import { StackScreenProps } from '@react-navigation/stack';
+import { onChildAdded, ref, onValue, get } from 'firebase/database';
+import { useFollowsList } from '../backend/useFollowsList';
 
 const windowDimensions = Dimensions.get('window');
 
@@ -63,26 +65,26 @@ const TavernPage = (params) => {
   const [addVisible, setAddVisible] = useState(false);
   const theme = useTheme();
 
-  let renderUsers = (active: boolean) => { // paramater true for active users, false for busy users
-    if(active == true) {
-      return tempUserArray.map((user) => {
-        return (
-          <Surface key={user.key} style={styles.surface} elevation={2} mode='elevated'>
-            <Text style={styles.adventurerNameText}>{user.name}</Text>
-          </Surface>
-        );
-      });
-    } else if (active == false) {
-      return tempUserArray.map((user) => {
-        return (
-          <Surface key={user.key} style={styles.surface} elevation={2} mode='elevated'>
-            <Text style={styles.adventurerNameText}>{user.name}</Text>
-          </Surface>
-        );
-      });
-    } else {
-      return(null);
+  const { follows } = useFollowsList();
+
+  let updateFollows = useEffect(() => {
+    if (Object.keys(follows).length == 0)
+    {
+      const followsRef = ref(database, 'follows/' + user?.uid);
     }
+  });
+
+  let renderUsers = (active: boolean) => { // paramater true for active users, false for busy users
+    return Object.entries(follows)
+      .map(([key, value]) => {
+        return (
+          <List.Item key={key} title={value} onPress={() => {
+            params.navigation.navigate('View User', {
+              userid: key,
+              username: value
+            })}}/>
+          );
+      });
   };
   
   return (
@@ -97,26 +99,16 @@ const TavernPage = (params) => {
           />
         <ScrollView>
           <View style={styles.adventurersWrapper}>
-            <View>
-              <Surface style={styles.sectionHeader} elevation={5} mode='elevated'>
-                <Text style={styles.adventurersHeaderText}>Questless!</Text>
-              </Surface>
-              {renderUsers(true)}
-            </View>
-            <View>
-              <Surface style={styles.sectionHeader} elevation={5} mode='elevated'>
-                <Text style={styles.adventurersHeaderText}>Busy Questing...</Text>
-              </Surface>
+            <List.Section>
               {renderUsers(false)}
-            </View>
+            </List.Section>
           </View>
-          <FAB
+        </ScrollView>
+        <FAB
             icon="plus"
             style={styles.fab}
             onPress={() => { setFollowVisible(true)}}
           />
-          <Button mode="contained" onPress={() => params.navigation.navigate('View User')}>View User</Button>
-        </ScrollView>
         <FollowUsernamePopup visible={followVisible} exit={() => setFollowVisible(false)}></FollowUsernamePopup>
         <ShareInfoPopup visible={shareVisible} exit={() => setShareVisible(false)}></ShareInfoPopup>
         <StatusBar style="auto" />  
@@ -132,39 +124,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  adventurersWrapper: {
-    width: windowDimensions.width,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    marginLeft: 16,
-  },
-  adventurersHeaderText: {
-    color: '#000',
-    fontSize: 24,
-    marginBottom: 8,
-    marginTop: 12,
-    marginLeft: 8,
-  },
-  adventurerNameText: {
-    color: '#000',
-    fontSize: 16,
-  },
-  signOut: {
-    width: windowDimensions.width / 8,
-    alignSelf: 'center',
-  },
-  headerButtonBox: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  headerButton: {
-    width: 48,
-    height: 48,
-    borderColor: '#000',
-    borderWidth: 1,
-    marginLeft: 8,
   },
   surface: {
     width: 80,
