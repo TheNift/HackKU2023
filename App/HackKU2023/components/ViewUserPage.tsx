@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import {
@@ -7,67 +7,73 @@ import {
 } from 'react-native-safe-area-context'; 
 import { List, Surface, useTheme, Button, FAB, Avatar } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient'
+import { database } from '../backend/Firebase';
+import { ref, get } from 'firebase/database';
 import { Alert } from 'react-native';
 
 const windowDimensions = Dimensions.get('window');
 
-const tempUserArray = [
-    {
-        level0: {
-            "12123": {
-                name: 'Address',
-                value: '1123 Lane',
-            },
-            "98342": {
-                name: 'Name',
-                value: 'John Doe',
-            }
-        },
-        level1: {
-            "91657": {
-                name: 'Twitter',
-                value: '@bruh',
-            },
-            "91732": {
-                name: 'Instagram',
-                value: '@john_doe',
-            }
-        },
-        level2: {
-            "9163": {
-                name: 'Phone',
-                value: '(123)456-7890'
-            }
-        },
-        level3: {
-            "42391": {
-                name: 'Email',
-                value: 'johndoe@hotmail.com'
-            }
-        },
-        level4: {
-            "71032": {
-                name: 'Facebook',
-                value: '@johnniedoseph'
-            }
-        },
-    }
-];
+var lastUid = undefined;
 
 const ViewUserPage = ({navigation, route}) => {
-    let parseUser = (request: string) => {
-        let returnVal;
-        for(let i in tempUserArray) {
-            for(let j in tempUserArray[i]) {
-               for(let x in tempUserArray[i][j]) {
-                    if(request == tempUserArray[i][j][x]["name"]) {
-                        returnVal = tempUserArray[i][j][x]["value"];
-                    }
-               }
-            }
+    let [level0Data, setLevel0Data] = React.useState({});
+    let [level1Data, setLevel1Data] = React.useState({});
+    let [level2Data, setLevel2Data] = React.useState({});
+    let [level3Data, setLevel3Data] = React.useState({});
+
+    let downloadUser = React.useEffect(() => {
+        var uid = route.params.userid;
+        if (uid != lastUid)
+        {
+            lastUid = uid;
+            var username = route.params.username;
+            get(ref(database, 'level0/' + uid)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    setLevel0Data(snapshot.val());
+                }
+            });
+            get(ref(database, 'level1/' + uid)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    setLevel1Data(snapshot.val());
+                }
+            });
+            get(ref(database, 'level2/' + uid)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    setLevel2Data(snapshot.val());
+                }
+            });
+            get(ref(database, 'level3/' + uid)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    setLevel3Data(snapshot.val());
+                }
+            });
         }
-        return returnVal;
-    }
+    });
+
+    let parseUser = (request: string) => {
+        let getIn = (levelData) => {
+            for(let j in levelData) {
+                if(levelData[j]['name'] == request) {
+                    return levelData[j]['value'];
+                }
+            }
+            return undefined;
+        };
+
+        let var0 = getIn(level0Data);
+        if (var0) return var0;
+
+        let var1 = getIn(level1Data);
+        if (var1) return var1;
+
+        let var2 = getIn(level2Data);
+        if (var2) return var2;
+
+        let var3 = getIn(level3Data);
+        if (var3) return var3;
+
+        return undefined;
+    };
 
     let organizeUserData = () => {
         let datapoints = ["Name","Email","Address","Phone","Twitter","Instagram","Facebook"];
@@ -134,6 +140,6 @@ const styles = StyleSheet.create({
     icon: {
         marginBottom: 24,
     }
-  });  
+  });
   
   export default ViewUserPage;
