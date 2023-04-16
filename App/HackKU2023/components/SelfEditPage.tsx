@@ -39,6 +39,11 @@ export default function SelfEditPage(props) {
             copy[key] = { name: value.name, value: text };
             setTraits(copy);
           }}
+          onRemove={() => {
+            let copy = {...traits};
+            delete copy[key];
+            setTraits(copy);
+          }}
         />
       )
     );

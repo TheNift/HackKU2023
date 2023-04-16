@@ -7,8 +7,8 @@ import TavernPage from './TavernPage';
 const HomePageNav = ({navigation, route}) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'allies', title: 'Allies', focusedIcon: 'heart'},
-    { key: 'me', title: 'Me', focusedIcon: 'album' },
+    { key: 'allies', title: 'Allies', focusedIcon: 'account-group'},
+    { key: 'me', title: 'Me', focusedIcon: 'account' },
   ]);
 
   const renderScene = ({ route, jumpTo })  => {
