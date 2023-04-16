@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   ScrollView,
   Dimensions,
@@ -13,7 +12,7 @@ import {
   SafeAreaProvider
 } from 'react-native-safe-area-context';  
 // import { Button } from 'react-native-elements';
-import { List, Surface, useTheme, Button, FAB } from 'react-native-paper';
+import { List, Surface, useTheme, Button, FAB, Divider, Text } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient'
 import { signOut } from 'firebase/auth'
 import { auth, database } from '../backend/Firebase';
@@ -78,11 +77,18 @@ const TavernPage = (params) => {
     return Object.entries(follows)
       .map(([key, value]) => {
         return (
-          <List.Item key={key} title={value} onPress={() => {
-            params.navigation.navigate('View User', {
-              userid: key,
-              username: value
-            })}}/>
+          <View key={key} style={styles.fullWidth}>
+            <Divider />
+            <List.Item
+              title={value}
+              onPress={() => {
+              params.navigation.navigate('View User', {
+                userid: key,
+                username: value
+              })}}>
+            </List.Item>
+            <Divider />
+          </View>
           );
       });
   };
@@ -100,6 +106,7 @@ const TavernPage = (params) => {
         <ScrollView>
           <View style={styles.adventurersWrapper}>
             <List.Section>
+              <List.Subheader>Contacts</List.Subheader>
               {renderUsers(false)}
             </List.Section>
           </View>
@@ -153,6 +160,9 @@ const styles = StyleSheet.create({
     marginLeft: -16,
     marginBottom: 16,
   },
+  fullWidth: {
+    width: windowDimensions.width
+  }
 });  
 
 export default TavernPage;
